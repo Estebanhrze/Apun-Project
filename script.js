@@ -1,6 +1,10 @@
 document.documentElement.classList.add("js");
 
 const sections = document.querySelectorAll(".section-reveal");
+const mapState = {
+  map: null,
+  tileLayer: null,
+};
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
@@ -31,13 +35,47 @@ window.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("page-loaded");
   });
 
+  initThemeToggle();
   initActiveNav();
   initContactMap();
 });
 
+function initThemeToggle() {
+  const toggleBtn = document.getElementById("theme-toggle");
+  if (!toggleBtn) {
+    return;
+  }
+
+  const savedTheme = localStorage.getItem("apun-theme");
+  const prefersLight =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  const initialTheme = savedTheme || (prefersLight ? "light" : "dark");
+
+  applyTheme(initialTheme);
+
+  toggleBtn.addEventListener("click", () => {
+    const isLight = document.body.classList.contains("theme-light");
+    const nextTheme = isLight ? "dark" : "light";
+    applyTheme(nextTheme);
+    localStorage.setItem("apun-theme", nextTheme);
+  });
+}
+
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  document.body.classList.toggle("theme-light", isLight);
+  const toggleBtn = document.getElementById("theme-toggle");
+  if (toggleBtn) {
+    toggleBtn.setAttribute("aria-label", isLight ? "Activar modo oscuro" : "Activar modo claro");
+    toggleBtn.setAttribute("title", isLight ? "Activar modo oscuro" : "Activar modo claro");
+  }
+
+  setMapTheme(theme);
+}
+
 function initActiveNav() {
   const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-  if (!navLinks.length || !("IntersectionObserver" in window)) {
+  if (!navLinks.length) {
     return;
   }
 
@@ -65,23 +103,83 @@ function initActiveNav() {
     });
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+  const sectionsById = new Map(sectionMap.map(({ section }) => [section.id, section]));
+  const sectionOffsets = () =>
+    sectionMap.map(({ section }) => ({
+      id: section.id,
+      top: section.getBoundingClientRect().top + window.scrollY,
+    }));
 
-      if (visible.length) {
-        activateLink(visible[0].target.id);
+  let ticking = false;
+
+  const updateByScroll = () => {
+    const headerOffset = 130;
+    const currentY = window.scrollY + headerOffset;
+    const points = sectionOffsets();
+
+    let activeId = points[0]?.id;
+    points.forEach((point) => {
+      if (currentY >= point.top) {
+        activeId = point.id;
       }
-    },
-    {
-      rootMargin: "-35% 0px -50% 0px",
-      threshold: [0.2, 0.5, 0.8],
-    }
-  );
+    });
 
-  sectionMap.forEach(({ section }) => observer.observe(section));
+    const isAtBottom =
+      Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight;
+    if (isAtBottom) {
+      activeId = points[points.length - 1]?.id;
+    }
+
+    if (activeId) {
+      activateLink(activeId);
+    }
+  };
+
+  const onScrollOrResize = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateByScroll();
+      ticking = false;
+    });
+  };
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const target = link.getAttribute("href");
+      if (!target) {
+        return;
+      }
+
+      activateLink(target.slice(1));
+    });
+  });
+
+  if (window.location.hash) {
+    const hashId = window.location.hash.slice(1);
+    if (sectionsById.has(hashId)) {
+      activateLink(hashId);
+    }
+  } else {
+    const firstTarget = navLinks[0].getAttribute("href");
+    if (firstTarget) {
+      activateLink(firstTarget.slice(1));
+    }
+  }
+
+  window.addEventListener("hashchange", () => {
+    const hashId = window.location.hash.slice(1);
+    if (sectionsById.has(hashId)) {
+      activateLink(hashId);
+    }
+  });
+
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize);
+  updateByScroll();
 }
 
 function initContactMap() {
@@ -95,11 +193,10 @@ function initContactMap() {
     scrollWheelZoom: false,
   }).setView([-2.170998, -79.922359], 11);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    subdomains: "abcd",
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap &copy; CARTO",
-  }).addTo(map);
+  mapState.map = map;
+
+  const currentTheme = document.body.classList.contains("theme-light") ? "light" : "dark";
+  setMapTheme(currentTheme);
 
   const nominatimUrl =
     "https://nominatim.openstreetmap.org/search?city=Guayaquil&country=Ecuador&format=geojson&polygon_geojson=1&limit=1";
@@ -150,4 +247,25 @@ function initContactMap() {
       fallback.style.fontSize = "0.9rem";
       mapContainer.appendChild(fallback);
     });
+}
+
+function setMapTheme(theme) {
+  if (!mapState.map || typeof L === "undefined") {
+    return;
+  }
+
+  if (mapState.tileLayer) {
+    mapState.map.removeLayer(mapState.tileLayer);
+  }
+
+  const tileUrl =
+    theme === "light"
+      ? "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+
+  mapState.tileLayer = L.tileLayer(tileUrl, {
+    subdomains: "abcd",
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap &copy; CARTO",
+  }).addTo(mapState.map);
 }

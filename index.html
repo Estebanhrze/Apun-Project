@@ -28,19 +28,21 @@
         <a href="#inicio" class="logo">Apun</a>
         <nav aria-label="Navegación principal">
           <ul class="nav-links">
-            <li><a href="#descripcion">Descripción</a></li>
+            <li><a href="#inicio">Inicio</a></li>
             <li><a href="#beneficios">Beneficios</a></li>
             <li><a href="#planes">Planes</a></li>
             <li><a href="#testimonios">Testimonios</a></li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
         </nav>
-        <a href="#contacto" class="btn btn-nav">Solicitar demo</a>
+        <div class="nav-actions">
+          <a href="#contacto" class="btn btn-nav">Solicitar demo</a>
+        </div>
       </div>
     </header>
 
-    <main id="inicio">
-      <section class="hero section-reveal">
+    <main>
+      <section id="inicio" class="hero section-reveal">
         <video class="hero-video-bg" autoplay muted loop playsinline>
           <source src="assets/media/Video1.mp4" type="video/mp4" />
         </video>
@@ -58,25 +60,6 @@
               <a href="#beneficios" class="btn btn-secondary">Ver beneficios</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section id="descripcion" class="section section-reveal">
-        <div class="container">
-          <h2>Descripción</h2>
-          <p>
-            Muchos negocios aún gestionan sus citas con llamadas, mensajes o
-            agendas físicas. Esto genera errores, desorganización y pérdida de oportunidades.
-            Apun automatiza el agendamiento para que propietarios y clientes resuelvan
-            todo en una sola plataforma, de forma simple e intuitiva.
-          </p>
-          <aside class="description-aside">
-            <h3>Dato clave</h3>
-            <p>
-              Negocios que usan recordatorios automáticos suelen reducir ausencias y
-              mejorar la puntualidad de sus clientes.
-            </p>
-          </aside>
         </div>
       </section>
 
@@ -241,12 +224,8 @@
           </div>
 
           <h3 class="plans-heading">Comparación rápida de planes</h3>
-          <p class="table-hint">Desliza horizontalmente para ver todas las columnas en móvil.</p>
           <div class="plans-table-wrap" role="region" aria-label="Tabla comparativa de planes" tabindex="0">
             <table class="plans-table">
-              <caption>
-                Comparación de precios y características por plan
-              </caption>
               <thead>
                 <tr>
                   <th scope="col">Plan</th>
@@ -295,7 +274,7 @@
         </div>
       </section>
 
-      <section id="testimonios" class="section section-reveal">
+      <section id="testimonios" class="section section-divider section-reveal">
         <div class="container">
           <h2>Testimonios</h2>
           <div class="testimonial-grid">
@@ -370,8 +349,18 @@
     </main>
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container footer-wrap">
         <p>© 2026 Apun. Gestión de reservaciones para negocios.</p>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Cambiar tema"
+          title="Cambiar tema"
+        >
+          <img src="assets/media/06-sun-fill.png" alt="" class="icon-sun-fill" />
+          <img src="assets/media/07-sun-line.png" alt="" class="icon-sun-line" />
+        </button>
       </div>
     </footer>
 
