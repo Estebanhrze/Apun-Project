@@ -16,4 +16,4 @@ El sitio muestra informacion del sistema de reservaciones, sus beneficios, testi
 
 `https://estebanhrze.github.io/Apun-Project/`
 
-![Captura del sitio web desplegado](05-pagina.png)
+![Captura del sitio web desplegado](assets/media/05-Pagina.png)
