@@ -14,6 +14,12 @@
       href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -29,6 +35,7 @@
             <li><a href="#contacto">Contacto</a></li>
           </ul>
         </nav>
+        <a href="#contacto" class="btn btn-nav">Solicitar demo</a>
       </div>
     </header>
 
@@ -39,19 +46,15 @@
         </video>
         <div class="container hero-grid">
           <div class="hero-copy intro-item intro-copy">
-            <p class="kicker"></p>
-            <h1>Apun
-            </h1>
-            <h3>
-              Organiza tus reservaciones en minutos, no en llamadas.
-            </h3>
+            <h1>Organiza tus reservaciones en minutos, no en llamadas.</h1>
+            <p class="hero-subtitle">Menos desorden operativo, mas clientes atendidos.</p>
             <p>
               Centraliza citas, envía recordatorios automáticos y brinda una experiencia
               rápida para tus clientes. Diseñado para negocios que quieren crecer
               sin complicarse.
             </p>
             <div class="hero-actions">
-              <a href="#contacto" class="btn btn-primary">Contactanos </a>
+              <a href="#contacto" class="btn btn-primary">Contactanos</a>
               <a href="#beneficios" class="btn btn-secondary">Ver beneficios</a>
             </div>
           </div>
@@ -200,6 +203,7 @@
                 <li>Exportar reservas/clientes</li>
                 <li>Feedback de clientes</li>
               </ul>
+              <a href="#contacto" class="btn btn-plan">Elegir Starter</a>
             </article>
 
             <article class="plan-card featured">
@@ -207,6 +211,7 @@
               <h3>Pro</h3>
               <p class="plan-price">120€/mes</p>
               <p>Para restaurantes con gestión avanzada.</p>
+              <p class="plan-savings">Ahorra tiempo en horas pico</p>
               <ul>
                 <li>Plan Starter incluido</li>
                 <li>Gestión de mesas</li>
@@ -216,6 +221,7 @@
                 <li>Reconfirmar usuario</li>
                 <li>Recordatorios email</li>
               </ul>
+              <a href="#contacto" class="btn btn-plan btn-plan-featured">Elegir Pro</a>
             </article>
 
             <article class="plan-card">
@@ -230,51 +236,55 @@
                 <li>Recordatorios SMS</li>
                 <li>Soporte prioritario</li>
               </ul>
+              <a href="#contacto" class="btn btn-plan">Elegir Premium</a>
             </article>
           </div>
 
-          <h3 class="plans-heading"> Comparación rápida de planes</h3>
-          <table class="plans-table">
-            <caption>
-              Comparación de precios y características por plan
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Plan</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Gestión de mesas</th>
-                <th scope="col">Pagos al reservar</th>
-                <th scope="col">Recordatorios SMS</th>
-                <th scope="col">Soporte</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Starter</th>
-                <td>80€</td>
-                <td>No</td>
-                <td>No</td>
-                <td>No</td>
-                <td>Estándar</td>
-              </tr>
-              <tr>
-                <th scope="row">Pro</th>
-                <td>120€</td>
-                <td>Sí</td>
-                <td>No</td>
-                <td>No</td>
-                <td>Prioritario</td>
-              </tr>
-              <tr>
-                <th scope="row">Premium</th>
-                <td>200€</td>
-                <td>Sí</td>
-                <td>Sí</td>
-                <td>Sí</td>
-                <td>Prioritario</td>
-              </tr>
-            </tbody>
-          </table>
+          <h3 class="plans-heading">Comparación rápida de planes</h3>
+          <p class="table-hint">Desliza horizontalmente para ver todas las columnas en móvil.</p>
+          <div class="plans-table-wrap" role="region" aria-label="Tabla comparativa de planes" tabindex="0">
+            <table class="plans-table">
+              <caption>
+                Comparación de precios y características por plan
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Plan</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Gestión de mesas</th>
+                  <th scope="col">Pagos al reservar</th>
+                  <th scope="col">Recordatorios SMS</th>
+                  <th scope="col">Soporte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Starter</th>
+                  <td>80€</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>Estándar</td>
+                </tr>
+                <tr>
+                  <th scope="row">Pro</th>
+                  <td>120€</td>
+                  <td>Sí</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>Prioritario</td>
+                </tr>
+                <tr>
+                  <th scope="row">Premium</th>
+                  <td>200€</td>
+                  <td>Sí</td>
+                  <td>Sí</td>
+                  <td>Sí</td>
+                  <td>Prioritario</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <h3>Empieza en 3 pasos</h3>
           <ol class="steps-list">
@@ -330,12 +340,11 @@
             <p><strong>Teléfono:</strong> +593  969  433 4567</p>
 
             <div class="contact-map-square">
-              <iframe
-                title="Mapa de referencia en Guayaquil"
-                src="https://www.google.com/maps?q=Guayaquil,Ecuador&output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <div
+                id="contact-map"
+                role="img"
+                aria-label="Mapa de referencia de Guayaquil con limites administrativos destacados"
+              ></div>
             </div>
           </div>
           <form class="contact-form" action="#" method="post">
@@ -366,6 +375,11 @@
       </div>
     </footer>
 
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>

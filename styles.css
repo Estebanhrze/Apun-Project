@@ -4,8 +4,9 @@
   --surface: #111826;
   --text: #e5e7eb;
   --muted: #9ca3af;
-  --primary: #f3f4f6;
-  --primary-dark: #d1d5db;
+  --primary: #31d0aa;
+  --primary-dark: #1eb493;
+  --accent-soft: #93f3dd;
   --line: #253041;
   --shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
 }
@@ -16,6 +17,15 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
 }
 
 body {
@@ -174,15 +184,53 @@ p {
   color: var(--muted);
   text-decoration: none;
   font-weight: 600;
+  position: relative;
+  padding-bottom: 0.2rem;
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
-  color: #ffffff;
+  color: var(--accent-soft);
+}
+
+.nav-links a.is-active {
+  color: #ebfff9;
+}
+
+.nav-links a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.btn-nav {
+  padding: 0.55rem 0.95rem;
+  background: rgba(49, 208, 170, 0.14);
+  border-color: rgba(49, 208, 170, 0.5);
+  color: #e6fff8;
+}
+
+.btn-nav:hover,
+.btn-nav:focus-visible {
+  background: rgba(49, 208, 170, 0.24);
 }
 
 .section {
   padding: 5rem 0;
+}
+
+.section h2 {
+  margin-bottom: 0.75rem;
+}
+
+.section > .container > p,
+.section .feature-intro {
+  margin-bottom: 1.2rem;
 }
 
 section[id] {
@@ -232,9 +280,19 @@ section[id] {
 }
 
 .kicker {
-  color: #cbd5e1;
+  color: var(--accent-soft);
   font-weight: 700;
   margin-bottom: 0.6rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.83rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  margin-top: -0.2rem;
+  margin-bottom: 0.85rem;
+  color: #d7e9ff;
 }
 
 .hero-copy p {
@@ -267,7 +325,7 @@ section[id] {
 
 .btn-primary {
   background: var(--primary);
-  color: #0b1020;
+  color: #05241d;
 }
 
 .btn-primary:hover,
@@ -284,7 +342,7 @@ section[id] {
 .btn-secondary:hover,
 .btn-secondary:focus-visible {
   background: rgba(29, 40, 61, 0.85);
-  border-color: #a6b4c9;
+  border-color: var(--accent-soft);
 }
 
 .hero-card {
@@ -451,12 +509,15 @@ section[id] {
 }
 
 .plan-card.featured {
-  border-color: #6b7280;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  border-color: var(--primary);
+  box-shadow: 0 18px 36px rgba(7, 23, 20, 0.45);
+  transform: translateY(-6px);
+  background: linear-gradient(170deg, #11231f 10%, #0f1826 100%);
 }
 
 .plans-table {
   width: 100%;
+  min-width: 700px;
   margin-top: 1.7rem;
   margin-bottom: 2rem;
   border-collapse: collapse;
@@ -468,6 +529,23 @@ section[id] {
 
 .plans-heading {
   margin-top: 2.2rem;
+}
+
+.table-hint {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.65rem;
+}
+
+.plans-table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  scrollbar-color: #4b5563 #0f1522;
+}
+
+.plans-table-wrap:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 3px;
 }
 
 .plans-table caption {
@@ -509,10 +587,32 @@ section[id] {
   margin-bottom: 0.7rem;
   padding: 0.26rem 0.65rem;
   border-radius: 999px;
-  border: 1px solid #6b7280;
-  color: #d1d5db;
+  border: 1px solid rgba(147, 243, 221, 0.65);
+  color: var(--accent-soft);
   font-size: 0.82rem;
   font-weight: 700;
+}
+
+.plan-savings {
+  color: var(--accent-soft);
+  font-weight: 600;
+  margin-top: -0.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.btn-plan {
+  margin-top: 0.95rem;
+  width: 100%;
+  text-align: center;
+  background: rgba(49, 208, 170, 0.1);
+  border-color: rgba(49, 208, 170, 0.5);
+  color: #defff7;
+}
+
+.btn-plan-featured {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #05241d;
 }
 
 .benefit-grid p,
@@ -559,10 +659,39 @@ blockquote cite {
   margin-top: 0.4rem;
 }
 
-.contact-map-square iframe {
+.contact-map-square iframe,
+#contact-map {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+#contact-map {
+  background: #0a0f1a;
+}
+
+.leaflet-container {
+  background: #0a0f1a;
+  font-family: "Manrope", sans-serif;
+}
+
+.leaflet-control-attribution {
+  background: rgba(10, 15, 26, 0.72);
+  color: #cbd5e1;
+}
+
+.leaflet-control-attribution a {
+  color: #e2e8f0;
+}
+
+.city-label {
+  background: rgba(11, 16, 32, 0.9);
+  border: 1px solid #ff3b30;
+  color: #f8fafc;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  font-weight: 700;
 }
 
 .contact-form {
@@ -593,8 +722,8 @@ blockquote cite {
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  outline: 2px solid #6b7280;
-  border-color: #6b7280;
+  outline: 2px solid var(--accent-soft);
+  border-color: var(--accent-soft);
 }
 
 .site-footer {
@@ -657,6 +786,11 @@ blockquote cite {
     justify-content: center;
   }
 
+  .btn-nav {
+    width: 100%;
+    text-align: center;
+  }
+
   .benefit-grid,
   .testimonial-grid,
   .plan-grid {
@@ -674,5 +808,10 @@ blockquote cite {
 
   .plans-table {
     font-size: 0.92rem;
+    margin-top: 0.7rem;
+  }
+
+  .table-hint {
+    font-size: 0.86rem;
   }
 }
