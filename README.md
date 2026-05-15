@@ -18,4 +18,4 @@ El sitio muestra informacion del sistema de reservaciones, sus beneficios, testi
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green)](https://estebanhrze.github.io/Apun-Project/)
 
-![Captura del sitio web desplegado](assets/media/05-Pagina.png)
+<img width="1920" height="1042" alt="Screenshot 2026-05-15 at 13-09-03 Apun Gestiona reservaciones sin complicaciones" src="https://github.com/user-attachments/assets/1893e300-34ba-404c-ae45-1e0b930dae61" />
