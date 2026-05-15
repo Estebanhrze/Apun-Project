@@ -204,13 +204,13 @@ function initContactMap() {
   fetch(nominatimUrl)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("No fue posible obtener el limite de Guayaquil");
+        throw new Error("No fue posible obtener el límite de Guayaquil");
       }
       return response.json();
     })
     .then((geojson) => {
       if (!geojson.features || !geojson.features.length) {
-        throw new Error("No se encontro el limite geografico");
+        throw new Error("No se encontró el límite geográfico");
       }
 
       const boundaryLayer = L.geoJSON(geojson, {

@@ -744,7 +744,7 @@ blockquote cite {
 .contact-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.3rem;
+  gap: 1.8rem;
   align-items: start;
 }
 
@@ -1034,6 +1034,7 @@ body.theme-light .site-footer {
   }
 
   .footer-wrap {
+    justify-content: space-between;
     align-items: flex-start;
   }
 
